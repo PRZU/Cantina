@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.util.Log;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -64,6 +65,10 @@ public class DownloadFileFromURL extends AsyncTask<String, String, String> {
     {
         int count;
         trust_all();
+
+        File f = new File(android.os.Environment.getExternalStorageDirectory(),File.separator+"/Cantina/");
+        f.mkdirs();
+
         try
         {
             URL url = new URL(f_url[0]);
@@ -73,7 +78,7 @@ public class DownloadFileFromURL extends AsyncTask<String, String, String> {
             InputStream input = new BufferedInputStream(url.openStream(), 8192);
 
             OutputStream output = new FileOutputStream(Environment
-                    .getExternalStorageDirectory().toString() + "/temp.pdf");
+                    .getExternalStorageDirectory().toString() + "/Cantina/temp.pdf");
 
             System.out.println(Environment
                     .getExternalStorageDirectory().toString());
@@ -93,9 +98,9 @@ public class DownloadFileFromURL extends AsyncTask<String, String, String> {
             Log.e("Error: ", e.getMessage());
         }
 
-        new PdfParser().parse_pdf(Environment.getExternalStorageDirectory().toString() + "/temp.pdf");
+        new PdfParser().parse_pdf(Environment.getExternalStorageDirectory().toString() + "/Cantina/temp.pdf");
 
-        return Environment.getExternalStorageDirectory().toString() + "temp.pdf";
+        return Environment.getExternalStorageDirectory().toString() + "/Cantina/temp.pdf";
     }
 }
 

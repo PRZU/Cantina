@@ -18,7 +18,7 @@ android {
         }
     }
     dependencies {
-        compile group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.1'
+        compile group: 'com.itextpdf', name: 'itextpdf', version: '5.0.6'
 
     }
     packagingOptions {

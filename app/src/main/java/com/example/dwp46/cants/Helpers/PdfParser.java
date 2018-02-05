@@ -1,15 +1,25 @@
 package com.example.dwp46.cants.Helpers;
 
-import org.apache.pdfbox.cos.COSDocument;
-import org.apache.pdfbox.io.RandomAccessBuffer;
-import org.apache.pdfbox.io.RandomAccessFile;
-import org.apache.pdfbox.io.RandomAccessRead;
-import org.apache.pdfbox.pdfparser.PDFParser;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.text.PDFTextStripper;
+import android.annotation.SuppressLint;
 
-import java.io.File;
-import java.io.FileInputStream;
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.pdf.PdfImportedPage;
+import com.itextpdf.text.pdf.PdfReader;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.parser.PdfTextExtractor;
+
+import org.json.JSONObject;
+
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by cruz on 03/02/2018.
@@ -17,47 +27,76 @@ import java.io.FileInputStream;
 
 public class PdfParser {
 
-    public void parse_pdf(String filename)
-    {
+    public static void parse_pdf(String filename) {
 
-    PDDocument pdDoc = null;
-    COSDocument cosDoc = null;
+        PdfReader reader;
+        //JSONObject json = new JSONObject();
+        String pattern_dia = "(?<=Dia )(.*)" ;
+        String pattern_alm = "(?<=Almoço )(.*)";
+        String pattern_jnt = "(?<=Jantar )(.*)";
+        Pattern r1 = Pattern.compile(pattern_dia);
+        Pattern r2 = Pattern.compile(pattern_alm);
+        Pattern r3 = Pattern.compile(pattern_jnt);
 
-    String parsedText;
-    try
-    {
-        System.out.println("oignite");
-        PDFParser parser = new PDFParser(new RandomAccessFile(new File(filename),"rw"));
-        System.out.println("ola");
-        parser.parse();
-        System.out.println("oile");
-        cosDoc = parser.getDocument();
-        PDFTextStripper pdfStripper = new PDFTextStripper();
-        System.out.println("joad");
-        pdDoc = new PDDocument(cosDoc);
-        System.out.println("1");
+        String aux_dia = null;
+        String alm;
+        String jnt;
+        try
+        {
+            reader = new PdfReader(filename);
+            @SuppressLint("UseSparseArrays") HashMap<String, Prato> ementa = new HashMap<>();
 
-        // é este amigo que está a dar problemas
+            for (int i = 1; i <= reader.getNumberOfPages(); i++)
+            {
+                try
+                {
+                    String[] lines = PdfTextExtractor.getTextFromPage(reader, i).split("\n");
+                    for (String l : lines)
+                    {
+                        Matcher m1 = r1.matcher(l);
+                        Matcher m2 = r2.matcher(l);
+                        Matcher m3 = r3.matcher(l);
 
-        parsedText = pdfStripper.getText(pdDoc);
+                        {
+                            if (m1.find())
+                            {
+                                aux_dia = m1.group(0);
+                                System.out.println("Found value dia: " + m1.group(0));
+                            }
+                            if (m2.find())
+                            {
+                                alm = m2.group(0);
+                                System.out.println("Found value almoco: " + m2.group(0));
+                            }
+                            if (m3.find())
+                            {
+                                jnt = m3.group(0);
+                                System.out.println("Found value jantar: " + m3.group(0));
+                            }
+                            ementa.put(aux_dia, new Prato());
+                        }
 
 
-        System.out.println("south");
-        System.out.println(parsedText.replaceAll("[^A-Za-z0-9. ]+", ""));
-        System.out.println("OMG");
-    }
-    catch(Exception e)
-    {
-        e.printStackTrace();
-        try {
-            if (cosDoc != null)
-                cosDoc.close();
-            if (pdDoc != null)
-                pdDoc.close();
-        } catch (Exception e1) {
+                    }
+
+
+
+                    //System.out.println(new String(reader.getPageContent(i)), StandardCharsets.UTF_8);
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+        catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-}
+
+    public static void main(String[] args) {
+        System.out.println(System.getProperty("user.dir"));
+        parse_pdf("EmentaTC_Fev18.pdf");
+    }
+
 }
