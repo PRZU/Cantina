@@ -1,32 +1,45 @@
 package com.example.dwp46.cants.Helpers;
 
+
 import java.util.Calendar;
 
 /**
  * Created by cruz on 04/02/2018.
  */
 
-public class TimeMapper
+public enum TimeMapper
 {
-    private String[] meses = {"Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Set", "Out", "Nov", "Dec"};
+    Janeiro,
+    Fevereiro,
+    Março,
+    Abril,
+    Maio,
+    Junho,
+    Julho,
+    Agosto,
+    Setembro,
+    Outubro,
+    Novembro,
+    Dezembro;
 
+    public int calculate_i()
+    {
+        switch (this) {
+            case Janeiro: return 1;
+            case Fevereiro: return 2;
+            case Março: return 3;
+            case Abril: return 4;
+            case Maio: return 5;
+            case Junho: return 6;
+            case Julho: return 7;
+            case Agosto: return 8;
+            case Setembro: return 9;
+            case Outubro: return 10;
+            case Novembro: return 11;
+            case Dezembro: return 12;
+            default:
+                throw new AssertionError("Unknown operations " + this);
+        }
+    }
 
-    private String getAno()
-    {
-        return String.valueOf(Calendar.getInstance().get(Calendar.YEAR)).substring(2);
-    }
-    private String getMes()
-    {
-        return this.meses[Calendar.MONTH - 1];
-    }
-
-    public int getDia()
-    {
-        return Calendar.DAY_OF_MONTH;
-    }
-
-    public String getMesAno()
-    {
-        return this.meses[Calendar.MONTH - 1] + getAno();
-    }
 }

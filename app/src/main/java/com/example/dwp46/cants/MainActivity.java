@@ -6,6 +6,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.dwp46.cants.Helpers.DownloadFileFromURL;
+import com.example.dwp46.cants.Helpers.TimeConvertion;
 import com.example.dwp46.cants.Helpers.TimeMapper;
 
 import org.json.JSONObject;
@@ -41,10 +42,11 @@ public class MainActivity extends AppCompatActivity {
     protected void init()
     {
         new DownloadFileFromURL().execute("https://www.sas.uminho.pt/uploads/EmentaTC_" +
-                new TimeMapper().getMesAno() + ".pdf");
+                TimeConvertion.getMesAno() + ".pdf");
        // new DownloadFileFromURL().execute("https://www.sas.uminho.pt/uploads/EmentaTC_OVL_" +
          //               new TimeMapper().getMesAno() + ".pdf");
         //new DownloadFileFromURL().execute("https://www.sas.uminho.pt/uploads/TAKEAYAYYYA.pdf");
+        show_omni();
     }
 
 
