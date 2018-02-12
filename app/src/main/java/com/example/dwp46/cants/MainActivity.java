@@ -1,6 +1,7 @@
 package com.example.dwp46.cants;
 
 import android.os.Bundle;
+import android.provider.SyncStateContract;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -9,21 +10,12 @@ import com.example.dwp46.cants.Helpers.DownloadFileFromURL;
 import com.example.dwp46.cants.Helpers.PdfParser;
 import com.example.dwp46.cants.Helpers.Prato;
 import com.example.dwp46.cants.Helpers.TimeConvertion;
-import com.example.dwp46.cants.Helpers.TimeMapper;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity
@@ -36,41 +28,45 @@ public class MainActivity extends AppCompatActivity
     private HashMap<String, Prato> ementa_carne = new HashMap<>();
     private HashMap<String, Prato> ementa_vegan = new HashMap<>();
     private HashMap<String, Prato> ementa_takey = new HashMap<>();
+    private DownloadFileFromURL dfl = new DownloadFileFromURL();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
         init();
-show_omni();
+        show_omni();
     }
 
 
     protected void init()
     {
-        if (new File(workingPath+ "EmentaTC_"+TimeConvertion.getMesAno() + ".json").exists())
+        if (new File(workingPath + "EmentaTC_" + TimeConvertion.getMesAno() + ".json").exists())
         {
             try
             {
-                this.ementa_carne = PdfParser.jsonLoad(workingPath + "EmentaTC_" + TimeConvertion.getMesAno() + ".json");
+                this.ementa_carne = PdfParser.jsonLoad(workingPath + "EmentaTC_" +
+                        TimeConvertion.getMesAno() + ".json");
+                dfl.execute("https://www.sas.uminho.pt/uploads/EmentaTC_" +
+                        TimeConvertion.getMesAno() + ".pdf").get();
+            } catch (ExecutionException | InterruptedException e1)
+            {
+                e1.printStackTrace();
             }
-            catch (Exception e)
+
+        } else
+        {
+            DownloadFileFromURL dfl = new DownloadFileFromURL();
+            try
+            {
+                dfl.execute("https://www.sas.uminho.pt/uploads/EmentaTC_" +
+                        TimeConvertion.getMesAno() + ".pdf").get();
+            } catch (ExecutionException | InterruptedException e)
             {
                 e.printStackTrace();
-                new DownloadFileFromURL().execute("https://www.sas.uminho.pt/uploads/EmentaTC_" +
-                        TimeConvertion.getMesAno() + ".pdf");
-                PdfParser.pdfParseSave(workingPath+ "EmentaTC_"+TimeConvertion.getMesAno() + ".pdf");
-                this.ementa_carne = PdfParser.jsonLoad(workingPath + "EmentaTC_" + TimeConvertion.getMesAno() + ".json");
             }
-        }
-        else
-        {
-            new DownloadFileFromURL().execute("https://www.sas.uminho.pt/uploads/EmentaTC_" +
-                    TimeConvertion.getMesAno() + ".pdf");
-            PdfParser.pdfParseSave(workingPath+ "EmentaTC_"+TimeConvertion.getMesAno() + ".pdf");
+            PdfParser.pdfParseSave(workingPath + "EmentaTC_" + TimeConvertion.getMesAno() + ".pdf");
             this.ementa_carne = PdfParser.jsonLoad(workingPath + "EmentaTC_" + TimeConvertion.getMesAno() + ".json");
         }
         /*if (new File(workingPath+ "EmentaTC_OVL_"+TimeConvertion.getMesAno() + ".json").exists())
@@ -101,10 +97,11 @@ show_omni();
 
         //planetList.addAll(Arrays.asList(planets));
 
-        for (Prato p: this.ementa_carne.values())
+        for (Prato p : this.ementa_carne.values())
         {
             //planetList.add("ola");
-            //System.out.println(p.toString());
+            System.out.println(p.toString());
+
             eme.add(p.toString());
         }
 

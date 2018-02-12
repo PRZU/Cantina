@@ -63,7 +63,7 @@ public class DownloadFileFromURL extends AsyncTask<String, String, String>
     }
 
     @Override
-    protected String doInBackground(String... f_url)
+    public String doInBackground(String... f_url)
     {
         int count;
         trust_all();
@@ -85,8 +85,6 @@ public class DownloadFileFromURL extends AsyncTask<String, String, String>
             OutputStream output = new FileOutputStream(Environment
                     .getExternalStorageDirectory().toString() + "/Cantina" + name);
 
-            System.out.println(Environment
-                    .getExternalStorageDirectory().toString());
             byte data[] = new byte[1024];
 
             while ((count = input.read(data)) != -1)
@@ -100,10 +98,12 @@ public class DownloadFileFromURL extends AsyncTask<String, String, String>
 
         } catch (Exception e)
         {
-            Log.e("Error: ", e.getMessage());
+            e.printStackTrace();
         }
         return Environment.getExternalStorageDirectory().toString() + "/Cantina" + name;
     }
+
+
 }
 
 

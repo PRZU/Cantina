@@ -30,6 +30,7 @@ public class PdfParser
     public static void pdfParseSave(String filename)
     {
         PdfReader reader = null;
+        int number_of_pages = 0;
         String pattern_dia = "(?<=Dia )(.*)";
         String pattern_alm = "(?<=Almoço )(.*)";
         String pattern_jnt = "(?<=Jantar )(.*)";
@@ -46,17 +47,21 @@ public class PdfParser
         try
         {
             reader = new PdfReader(filename);
+            number_of_pages = reader.getNumberOfPages();
+
         } catch (IOException e)
         {
             e.printStackTrace();
         }
-        for (int i = 1; i <= reader.getNumberOfPages(); i++)
+
+        for (int i = 1; i <= number_of_pages; i++)
         {
             try
             {
                 String[] lines = PdfTextExtractor.getTextFromPage(reader, i).split("\n");
                 for (String l : lines)
                 {
+                    System.out.println("Line: " + l);
                     Matcher m1 = r1.matcher(l);
                     Matcher m2 = r2.matcher(l);
                     Matcher m3 = r3.matcher(l);
