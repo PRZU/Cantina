@@ -103,7 +103,6 @@ public class PdfParser
             for (Object o : ementa.entrySet())
             {
                 Map.Entry pairs = (Map.Entry) o;
-                System.out.println("whip " + pairs.getKey());
                 jsonObject.put(String.valueOf(pairs.getKey()), gson.toJson(pairs.getValue()));
             }
             ol.write(String.valueOf(jsonObject));

@@ -1,7 +1,45 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"  
- android:id="@+id/rowTextView"   
- android:layout_width="fill_parent"   
- android:layout_height="wrap_content"  
- android:padding="10dp"  
- android:textSize="16sp" >  
-</TextView> 
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linear"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <!--android:layout_width="wrap_content"-->
+
+    <TextView
+        android:id="@+id/dia"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/back"
+        android:text="@+id/dia_text"
+        android:gravity="center"
+        android:textSize="20sp" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/almoco"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:text="@+id/almoco_text"
+            android:gravity="center"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/jantar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/back"
+            android:text="@+id/jantar_text"
+            android:gravity="center"
+            android:textSize="20sp" />
+    </LinearLayout>
+
+
+</LinearLayout>

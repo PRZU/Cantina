@@ -33,19 +33,18 @@ public class OLV_Fragment extends Fragment
 
         ListView tv = v.findViewById(R.id.mainListView);
         ArrayList<String> ementa = new ArrayList<>();
-
-
+        int pos = 0;
         for (Prato p : this.ementa_olv.values())
         {
+            if(p.getDia() == TimeConvertion.getDia())
+                pos = ementa.size() + 1;
             ementa.add(p.toString());
         }
 
-        final ArrayAdapter adapter = new ArrayAdapter<>(getActivity(),
-                R.layout.row,
-                ementa);
 
+        EmentaAdapter adapter = new EmentaAdapter(getActivity(), ementa.toArray(new String[0]));
         tv.setAdapter(adapter);
-
+        tv.setSelection(pos);
         return v;
     }
 

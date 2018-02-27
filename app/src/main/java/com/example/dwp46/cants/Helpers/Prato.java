@@ -68,6 +68,12 @@ public class Prato implements Serializable
             e.printStackTrace();
         }
     }
+
+    public int getDia()
+    {
+        return dia;
+    }
+
     @Override
     public String toString()
     {

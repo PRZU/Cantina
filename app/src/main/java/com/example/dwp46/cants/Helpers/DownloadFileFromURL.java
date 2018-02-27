@@ -155,9 +155,6 @@ public class DownloadFileFromURL extends AsyncTask<String, String, String>
     public String doInBackground(String... f_url)
     {
         int count;
-       //trust();
-        //trust_all();
-
         String name = f_url[0].substring(f_url[0].lastIndexOf('/'));
 
         File f = new File(android.os.Environment.getExternalStorageDirectory(),File.separator+"Cantina/");

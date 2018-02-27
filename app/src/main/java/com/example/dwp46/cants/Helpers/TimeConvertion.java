@@ -8,7 +8,7 @@ import java.util.Calendar;
 
 public class TimeConvertion {
 
-    private static String calculate_s(int mes)
+    public static String calculate_s(int mes)
     {
         switch (mes) {
             case 0: return "Janeiro";
@@ -31,6 +31,11 @@ public class TimeConvertion {
     private static String getAno()
     {
         return String.valueOf(Calendar.getInstance().get(Calendar.YEAR)).substring(2);
+    }
+
+    public static int getDia()
+    {
+        return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
     }
 
     public static String getMesAno()
