@@ -20,7 +20,7 @@ public class EmentaAdapter extends ArrayAdapter<String>
     private final Context context;
     private final String[] values;
 
-    public EmentaAdapter(Context context, String[] values)
+    EmentaAdapter(Context context, String[] values)
     {
         super(context, -1, values);
         this.context = context;

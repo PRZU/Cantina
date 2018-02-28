@@ -36,7 +36,7 @@ public class OLV_Fragment extends Fragment
         int pos = 0;
         for (Prato p : this.ementa_olv.values())
         {
-            if(p.getDia() == TimeConvertion.getDia())
+            if (p.getDia() == TimeConvertion.getDia())
                 pos = ementa.size() + 1;
             ementa.add(p.toString());
         }

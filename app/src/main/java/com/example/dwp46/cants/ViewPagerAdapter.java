@@ -22,8 +22,8 @@ class ViewPagerAdapter extends FragmentPagerAdapter
                 return Meat_Fragment.newInstance();
             case 1:
                 return OLV_Fragment.newInstance();
-          //  case 2:
-           //     return TakeAway_Fragment.newInstance();
+            //  case 2:
+            //     return TakeAway_Fragment.newInstance();
             default:
                 return Meat_Fragment.newInstance();
         }

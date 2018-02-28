@@ -30,20 +30,18 @@ public class Meat_Fragment extends Fragment
     private TreeMap<Integer, Prato> ementa_carne = new TreeMap<>();
     private final String workingPath = android.os.Environment.getExternalStorageDirectory() +
             "/Cantina/";
-    private View view;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.first_frag, container, false);
-        this.view = v;
         ListView tv = v.findViewById(R.id.mainListView);
         ArrayList<String> ementa = new ArrayList<>();
         int pos = 0;
 
         for (Prato p : this.ementa_carne.values())
         {
-            if(p.getDia() == TimeConvertion.getDia())
+            if (p.getDia() == TimeConvertion.getDia())
                 pos = ementa.size() + 1;
             ementa.add(p.toString());
         }
