@@ -1,7 +1,10 @@
 # Cantina
-App para ver ementas da cantina
+Aplicação para ver as ementas da cantina. 
+
 
 
 TODO:
-Interface Gráfica
-Implementação do Take-away
+Adicionar o take-away
+Melhorar interface gráfica
+
+
