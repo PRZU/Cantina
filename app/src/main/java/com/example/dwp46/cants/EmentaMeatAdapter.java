@@ -7,26 +7,23 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.dwp46.cants.Trash.TimeConvertion;
+import com.example.dwp46.cants.Helpers.TimeConvertion;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EmentaMeatAdapter extends ArrayAdapter<String>
-{
+public class EmentaMeatAdapter extends ArrayAdapter<String> {
     private final Context context;
     private final String[] values;
 
-    EmentaMeatAdapter(Context context, String[] values)
-    {
+    EmentaMeatAdapter(Context context, String[] values) {
         super(context, -1, values);
         this.context = context;
         this.values = values;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
-    {
+    public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.row, parent, false);

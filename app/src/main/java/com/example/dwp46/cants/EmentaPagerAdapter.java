@@ -10,27 +10,22 @@ import com.example.dwp46.cants.Helpers.DataLoader;
 import java.io.File;
 import java.util.concurrent.ExecutionException;
 
-class EmentaPagerAdapter extends FragmentPagerAdapter
-{
-    EmentaPagerAdapter(FragmentManager fm, MainActivity mainActivity)
-    {
+class EmentaPagerAdapter extends FragmentPagerAdapter {
+    EmentaPagerAdapter(FragmentManager fm, MainActivity mainActivity) {
         super(fm);
-        if(!new File(Environment.getExternalStorageDirectory().
-                toString() + "/Cantina/cache.json").exists())
-        {
+        if (!new File(Environment.getExternalStorageDirectory().
+                toString() + "/Cantina/cache.json").exists()) {
             try {
                 new DataLoader(mainActivity).execute("").get();
-            } catch (ExecutionException|InterruptedException e) {
+            } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
         }
     }
 
     @Override
-    public Fragment getItem(int pos)
-    {
-        switch (pos)
-        {
+    public Fragment getItem(int pos) {
+        switch (pos) {
             case 0:
                 return Meat_Fragment.newInstance();
             case 1:
@@ -41,8 +36,7 @@ class EmentaPagerAdapter extends FragmentPagerAdapter
     }
 
     @Override
-    public int getCount()
-    {
+    public int getCount() {
         return 2;
     }
 

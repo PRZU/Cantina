@@ -37,6 +37,39 @@ public class DataLoader extends AsyncTask<String, String, String> {
         this.is = is;
     }
 
+    public static TreeMap<Integer, Prato> loadFromJSON() {
+        TreeMap<Integer, Prato> ementa = new TreeMap<>();
+        byte[] data = null;
+
+        try {
+            File file = new File(Environment
+                    .getExternalStorageDirectory().toString() + "/Cantina/cache.json");
+            FileInputStream fis = new FileInputStream(file);
+            data = new byte[(int) file.length()];
+            fis.read(data);
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject jObject = new JSONObject(String.valueOf(new String(data, "UTF-8")));
+            Iterator<?> keys = jObject.keys();
+
+            while (keys.hasNext()) {
+                String key = (String) keys.next();
+                Gson gson = new Gson();
+                Prato prato = gson.fromJson(jObject.getString(key), Prato.class);
+                ementa.put(Integer.valueOf(key), prato);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return ementa;
+    }
+
     @SuppressLint("NewApi")
     @Override
     public String doInBackground(String... f_url) {
@@ -161,39 +194,5 @@ public class DataLoader extends AsyncTask<String, String, String> {
         }
 
         return "";
-    }
-
-
-    public static TreeMap<Integer, Prato> loadFromJSON() {
-        TreeMap<Integer, Prato> ementa = new TreeMap<>();
-        byte[] data = null;
-
-        try {
-            File file = new File(Environment
-                    .getExternalStorageDirectory().toString() + "/Cantina/cache.json");
-            FileInputStream fis = new FileInputStream(file);
-            data = new byte[(int) file.length()];
-            fis.read(data);
-            fis.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JSONObject jObject = new JSONObject(String.valueOf(new String(data, "UTF-8")));
-            Iterator<?> keys = jObject.keys();
-
-            while (keys.hasNext()) {
-                String key = (String) keys.next();
-                Gson gson = new Gson();
-                Prato prato = gson.fromJson(jObject.getString(key), Prato.class);
-                ementa.put(Integer.valueOf(key), prato);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return ementa;
     }
 }

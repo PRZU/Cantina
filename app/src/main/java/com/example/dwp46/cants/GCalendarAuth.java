@@ -20,13 +20,11 @@ public class GCalendarAuth {
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR_READONLY);
 
-    private static Credential getCredentials(Context is) throws IOException
-    {
+    private static Credential getCredentials(Context is) throws IOException {
         return GoogleCredential.fromStream((is.getAssets().open("EmentasUM-5029bdb036ca.json"))).createScoped(SCOPES);
     }
 
-    public static Calendar getService(Context is) throws IOException
-    {
+    public static Calendar getService(Context is) throws IOException {
         final NetHttpTransport HTTP_TRANSPORT = (NetHttpTransport) AndroidHttp.newCompatibleTransport();
         return new Calendar.Builder(HTTP_TRANSPORT, JSON_FACTORY, getCredentials(is))
                 .setApplicationName(APPLICATION_NAME)
