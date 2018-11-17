@@ -91,8 +91,4 @@ public class Prato implements Serializable {
                 ", mes=" + mes +
                 '}';
     }
-
-    public String toStringOVL() {
-        return "";
-    }
 }
