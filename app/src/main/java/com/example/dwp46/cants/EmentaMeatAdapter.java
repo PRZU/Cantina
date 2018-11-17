@@ -1,26 +1,23 @@
 package com.example.dwp46.cants;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.dwp46.cants.Helpers.TimeConvertion;
+import com.example.dwp46.cants.Trash.TimeConvertion;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class EmentaAdapter extends ArrayAdapter<String>
+public class EmentaMeatAdapter extends ArrayAdapter<String>
 {
     private final Context context;
     private final String[] values;
 
-    EmentaAdapter(Context context, String[] values)
+    EmentaMeatAdapter(Context context, String[] values)
     {
         super(context, -1, values);
         this.context = context;

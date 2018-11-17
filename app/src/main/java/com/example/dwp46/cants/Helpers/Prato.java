@@ -1,12 +1,10 @@
 package com.example.dwp46.cants.Helpers;
 
-import com.fasterxml.jackson.databind.Module;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.dwp46.cants.Trash.TimeMapper;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,15 +16,18 @@ import java.util.regex.Pattern;
 public class Prato implements Serializable
 {
     private String almoco_prato;
-    private String jantar_prato;
     private String almoco_sopa;
+    private String almoco_OVL;
+
+    private String jantar_prato;
     private String jantar_sopa;
+    private String jantar_OVL;
 
     private int dia;
     private int mes;
 
 
-    Prato(String dia, String almoco, String jantar)
+    void Prato(String dia, String almoco, String jantar)
     {
         String pattern_sep = "[A-ZÁÀÉÈÍÌÓÒÚÙ][a-zA-Z-çãõáàÁÀéèÉÈíìÍÌóòÓÒúùÚÙâÂêÊôÔ ]+";
         String pattern_dia = "[^ ]+";
@@ -57,16 +58,30 @@ public class Prato implements Serializable
         try
         {
             this.almoco_prato = jsonObject.getString("almoco_prato");
-            this.almoco_prato = jsonObject.getString("almoco_sopa");
-            this.almoco_prato = jsonObject.getString("jantar_prato");
-            this.almoco_prato = jsonObject.getString("jantar_sopa");
-            this.almoco_prato = String.valueOf(jsonObject.getInt("dia"));
-            this.almoco_prato = String.valueOf(jsonObject.getInt("mes"));
+            this.almoco_sopa  = jsonObject.getString("almoco_sopa");
+            this.almoco_OVL   = jsonObject.getString("almoco_OVL");
+            this.jantar_prato = jsonObject.getString("jantar_prato");
+            this.jantar_sopa  = jsonObject.getString("jantar_sopa");
+            this.jantar_OVL   = jsonObject.getString("jantar_OVL");
+            this.dia = Integer.parseInt(String.valueOf(jsonObject.getInt("dia")));
+            this.mes = Integer.parseInt(String.valueOf(jsonObject.getInt("mes")));
 
         } catch (JSONException e)
         {
             e.printStackTrace();
         }
+    }
+
+    public Prato(int day, int mes, String almoco_prato, String almoco_sopa, String almoco_OVL,
+                 String jantar_prato, String jantar_sopa, String jantar_OVL) {
+        this.dia = day;
+        this.mes = mes;
+        this.almoco_prato = almoco_prato;
+        this.almoco_sopa = almoco_sopa;
+        this.almoco_OVL = almoco_OVL;
+        this.jantar_prato = jantar_prato;
+        this.jantar_sopa = jantar_sopa;
+        this.jantar_OVL = jantar_OVL;
     }
 
     public int getDia()
@@ -78,11 +93,17 @@ public class Prato implements Serializable
     public String toString()
     {
         return "Prato{almoco_prato='" + almoco_prato + '\'' +
-                ", jantar_prato='" + jantar_prato + '\'' +
                 ", almoco_sopa='" + almoco_sopa + '\'' +
+                ", almoco_OVL='" + almoco_OVL + '\'' +
+                ", jantar_prato='" + jantar_prato + '\'' +
                 ", jantar_sopa='" + jantar_sopa + '\'' +
+                ", jantar_OVL='" + jantar_OVL + '\'' +
                 ", dia=" + dia +
                 ", mes=" + mes +
                 '}';
+    }
+
+    public String toStringOVL() {
+        return "";
     }
 }

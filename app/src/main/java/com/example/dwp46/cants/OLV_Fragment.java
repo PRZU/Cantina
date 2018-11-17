@@ -5,35 +5,29 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.dwp46.cants.Helpers.DownloadFileFromURL;
-import com.example.dwp46.cants.Helpers.PdfParser;
+import com.example.dwp46.cants.Helpers.DataLoader;
 import com.example.dwp46.cants.Helpers.Prato;
-import com.example.dwp46.cants.Helpers.TimeConvertion;
+import com.example.dwp46.cants.Trash.TimeConvertion;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.TreeMap;
-import java.util.concurrent.ExecutionException;
 
 public class OLV_Fragment extends Fragment
 {
+
     private TreeMap<Integer, Prato> ementa_olv = new TreeMap<>();
-    private final String workingPath = android.os.Environment.getExternalStorageDirectory() +
-            "/Cantina/";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         View v = inflater.inflate(R.layout.first_frag, container, false);
-
         ListView tv = v.findViewById(R.id.mainListView);
         ArrayList<String> ementa = new ArrayList<>();
         int pos = 0;
+
+
         for (Prato p : this.ementa_olv.values())
         {
             if (p.getDia() == TimeConvertion.getDia())
@@ -41,48 +35,18 @@ public class OLV_Fragment extends Fragment
             ementa.add(p.toString());
         }
 
-
-        EmentaAdapter adapter = new EmentaAdapter(getActivity(), ementa.toArray(new String[0]));
+        EmentaOVLAdapter adapter = new EmentaOVLAdapter(getActivity(), ementa.toArray(new String[0]));
         tv.setAdapter(adapter);
+
         tv.setSelection(pos);
+
         return v;
     }
 
 
     private void init()
     {
-        DownloadFileFromURL dfl = new DownloadFileFromURL();
-
-        if (new File(workingPath + "EmentaTC_OVL_" + TimeConvertion.getMesAno() + ".json").exists())
-        {
-            try
-            {
-                this.ementa_olv = PdfParser.jsonLoad(workingPath + "EmentaTC_OVL_" +
-                        TimeConvertion.getMesAno() + ".json");
-                dfl.execute("http://www.sas.uminho.pt/uploads/EmentaTC_OVL_" +
-                        TimeConvertion.getMesAno() + ".pdf").get();
-            }
-            catch (ExecutionException | InterruptedException e1)
-            {
-                e1.printStackTrace();
-            }
-
-        }
-        else
-        {
-            dfl = new DownloadFileFromURL();
-            try
-            {
-                dfl.execute("http://www.sas.uminho.pt/uploads/EmentaTC_OVL_" +
-                        TimeConvertion.getMesAno() + ".pdf").get();
-            }
-            catch (ExecutionException | InterruptedException e)
-            {
-                e.printStackTrace();
-            }
-            PdfParser.pdfParseSave(workingPath + "EmentaTC_OVL_" + TimeConvertion.getMesAno() + ".pdf");
-            this.ementa_olv = PdfParser.jsonLoad(workingPath + "EmentaTC_OVL_" + TimeConvertion.getMesAno() + ".json");
-        }
+            this.ementa_olv = DataLoader.loadFromJSON();
     }
 
     public static OLV_Fragment newInstance()
