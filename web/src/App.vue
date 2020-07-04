@@ -1,14 +1,22 @@
 <template>
-  <MainPage id="app"/>
+  <div id="app">
+    <TopNav></TopNav>
+    <router-view/>
+    <Footer></Footer>
+  </div>
 </template>
 
 <script>
-import MainPage from './components/MainPage.vue'
+import 'vue'
+import 'vue-router'
+import TopNav from './components/TopNav.vue'
+import Footer from './components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
-    MainPage
+    TopNav,
+    Footer
   }
 }
 </script>

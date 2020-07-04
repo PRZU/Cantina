@@ -1,12 +1,12 @@
 <template>
   <b-container class="pt-3 pb-3" fluid>
-    <h2>MainPage</h2>
+    <h2>About</h2>
   </b-container>
 </template>
 
 <script>
 export default {
-  name: 'MainPage'
+  name: 'About'
 }
 </script>
 
