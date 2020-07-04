@@ -1,14 +1,12 @@
 <template>
   <div id="app">
-    <TopNav></TopNav>
+    <TopNav/>
     <router-view/>
-    <Footer></Footer>
+    <Footer/>
   </div>
 </template>
 
 <script>
-import 'vue'
-import 'vue-router'
 import TopNav from './components/TopNav.vue'
 import Footer from './components/Footer.vue'
 
@@ -23,7 +21,7 @@ export default {
 
 <style lang="scss">
 $text-color: #2c3e50;
-$bg-color: #F0F8FF;
+$bg-color: #FFFAFA;
 
 body, html{
   width: 100%;
