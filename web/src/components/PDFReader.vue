@@ -78,8 +78,7 @@ export default {
                                 j++
                             }
                         }
-                        
-                        this.$refs.table.refresh()
+                    this.$refs.table.refresh()
                 })
             })
         }
